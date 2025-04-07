@@ -31,7 +31,7 @@
 
                             {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('film_new') }}">Ajouter un film</a>
+                                    <a class="nav-link" href="{{ path('app_film_new') }}">Ajouter un film</a>
                                 </li>
                             {% endif %}
 
