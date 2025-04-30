@@ -37,9 +37,6 @@ final class FilmController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($film);
-            $entityManager->flush();
-
             /** @var UploadedFile $imageFile */
             $imageFile = $form->get('imageFile')->getData();
 
@@ -54,15 +51,18 @@ final class FilmController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Gère l’erreur si besoin
+                    $this->addFlash('danger', 'Erreur lors de l\'upload de l\'image.');
                 }
 
                 $film->setImage($newFilename);
             }
 
+            $entityManager->persist($film);
+            $entityManager->flush();
 
-            return $this->redirectToRoute('app_film_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_film_index');
         }
+
 
         return $this->render('film/new.html.twig', [
             'film' => $film,
