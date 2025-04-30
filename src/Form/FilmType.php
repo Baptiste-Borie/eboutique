@@ -20,7 +20,7 @@ class FilmType extends AbstractType
             ->add('description')
             ->add('prix')
             ->add('format')
-            ->add('image', FileType::class, [
+            ->add('imageFile', FileType::class, [
                 'label' => 'Image du film (JPG, PNG, WebP)',
                 'mapped' => false,
                 'required' => true,
