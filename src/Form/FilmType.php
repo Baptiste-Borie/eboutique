@@ -6,6 +6,8 @@ use App\Entity\Film;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class FilmType extends AbstractType
 {
@@ -16,8 +18,22 @@ class FilmType extends AbstractType
             ->add('description')
             ->add('prix')
             ->add('format')
-            ->add('image')
-        ;
+            ->add('imageFile', FileType::class, [
+                'label' => 'Image du film (JPG, PNG, WebP)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Merci de choisir une image valide (JPG/PNG/WebP)',
+                    ])
+                ],
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
