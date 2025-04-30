@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 
 class FilmType extends AbstractType
 {
@@ -18,22 +20,25 @@ class FilmType extends AbstractType
             ->add('description')
             ->add('prix')
             ->add('format')
-            ->add('imageFile', FileType::class, [
+            ->add('image', FileType::class, [
                 'label' => 'Image du film (JPG, PNG, WebP)',
                 'mapped' => false,
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de sélectionner une image.',
+                    ]),
                     new File([
-                        'maxSize' => '5M',
+                        'maxSize' => '2M',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
                             'image/webp',
                         ],
-                        'mimeTypesMessage' => 'Merci de choisir une image valide (JPG/PNG/WebP)',
-                    ])
+                        'mimeTypesMessage' => 'Merci de choisir une image valide (JPG, PNG, WebP)',
+                    ]),
                 ],
-            ]);;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
