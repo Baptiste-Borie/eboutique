@@ -18,6 +18,7 @@
                             <h5 class="card-title">{{ film.titre }}</h5>
                             <p class="card-text"><strong>Prix :</strong> {{ film.prix ?? 'Non spécifié' }} €</p>
                             <a href="{{ path('app_film_show', {'id': film.id}) }}" class="btn btn-primary mt-auto">Voir le détail</a>
+                            <a href="{{ path('app_cart_add', {'id': film.id}) }}" class="btn btn-success mt-2">Ajouter au panier</a>
                         </div>
                     </div>
                 </div>

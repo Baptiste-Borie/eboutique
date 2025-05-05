@@ -39,8 +39,13 @@
                             {# Si l'utilisateur est connecté, afficher Déconnexion #}
                             {% if app.user %}
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('app_cart') }}">Panier</a>
+                                </li>
+
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                                 </li>
+
                             {% endif %}
                         </ul>
 
