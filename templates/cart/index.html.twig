@@ -9,12 +9,13 @@
     {% if cartItems is not empty %}
         <table class="table table-striped">
             <thead>
-                <tr>
-                    <th>Film</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                    <th>Total</th>
-                </tr>
+        <tr>
+            <th>Film</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
             </thead>
             <tbody>
                 {% set total = 0 %}
@@ -26,6 +27,9 @@
                         <td>{{ item.film.prix }} €</td>
                         <td>{{ item.quantity }}</td>
                         <td>{{ totalItem }} €</td>
+                        <td>
+                            <a href="{{ path('app_cart_remove', {'id': item.id}) }}" class="btn btn-danger btn-sm">Retirer</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

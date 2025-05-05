@@ -81,4 +81,24 @@ final class CartController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
+
+    #[Route('/cart/remove/{id}', name: 'app_cart_remove')]
+    public function removeFromCart(
+        CartItem $cartItem,
+        Security $security,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $user = $security->getUser();
+
+        if (!$user || $cartItem->getCart()->getUser() !== $user) {
+            throw $this->createAccessDeniedException('Accès refusé.');
+        }
+
+        $entityManager->remove($cartItem);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Film retiré du panier.');
+
+        return $this->redirectToRoute('app_cart');
+    }
 }
