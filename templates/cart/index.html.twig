@@ -14,6 +14,7 @@
             <th>Prix</th>
             <th>Quantité</th>
             <th>Total</th>
+            <th>Categorie</th>
             <th>Action</th>
         </tr>
             </thead>
@@ -27,6 +28,7 @@
                         <td>{{ item.film.prix }} €</td>
                         <td>{{ item.quantity }}</td>
                         <td>{{ totalItem }} €</td>
+                        <td>{{item.categorie}}</td> 
                         <td>
                             <a href="{{ path('app_cart_remove', {'id': item.id}) }}" class="btn btn-danger btn-sm">Retirer</a>
                         </td>

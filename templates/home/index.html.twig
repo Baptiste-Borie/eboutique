@@ -1,8 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+
     <div class="container my-5">
         <h2 class="mb-4">Films disponibles</h2>
+            <form method="get" class="mb-4">
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-4">
+                        <label for="categorie" class="form-label">Filtrer par catégorie</label>
+                        <select name="categorie" id="categorie" class="form-select">
+                            <option value="">Toutes les catégories</option>
+                            {% for categorie in categories %}
+                                <option value="{{ categorie.id }}" {% if selectedCategorie == categorie.id %}selected{% endif %}>
+                                    {{ categorie.nom }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Filtrer</button>
+                    </div>
+                </div>
+            </form>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for film in films %}
                 <div class="col">

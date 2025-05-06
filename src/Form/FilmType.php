@@ -9,6 +9,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use App\Entity\Categorie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 
 class FilmType extends AbstractType
@@ -18,16 +21,19 @@ class FilmType extends AbstractType
         $builder
             ->add('titre')
             ->add('description')
+            ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir une catégorie',
+                'required' => false,
+            ])
             ->add('prix')
             ->add('format')
             ->add('imageFile', FileType::class, [
                 'label' => 'Image du film (JPG, PNG, WebP)',
                 'mapped' => false,
-                'required' => true,
+                'required' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci de sélectionner une image.',
-                    ]),
                     new File([
                         'maxSize' => '2M',
                         'mimeTypes' => [

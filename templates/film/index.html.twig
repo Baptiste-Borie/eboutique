@@ -5,12 +5,16 @@
 {% block body %}
     <h1>Film index</h1>
 
+    <div class="btn">
+        <a class="" href="{{ path('app_film_new') }}">Ajouter un film</a>
+    </div>
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Titre</th>
                 <th>Description</th>
+                <th>Catégorie</th>
                 <th>Prix</th>
                 <th>Format</th>
                 <th>Image</th>
@@ -23,6 +27,7 @@
                 <td>{{ film.id }}</td>
                 <td>{{ film.titre }}</td>
                 <td>{{ film.description }}</td>
+                <td>{{film.categorie}}</td>
                 <td>{{ film.prix }}</td>
                 <td>{{ film.format }}</td>
                 <td>{{ film.image }}</td>
