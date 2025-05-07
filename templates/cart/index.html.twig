@@ -27,9 +27,15 @@
                         <td>{{ item.film.prix }} €</td>
                         <td>{{ item.quantity }}</td>
                         <td>{{ totalItem }} €</td>
-                        <td>
+                     <td>
+                        <div class="btn-group" role="group">
+                            <a href="{{ path('app_cart_decrease', {'id': item.id}) }}" class="btn btn-warning btn-sm">-</a>
+                            <span class="btn btn-light btn-sm">{{ item.quantity }}</span>
+                            <a href="{{ path('app_cart_increase', {'id': item.id}) }}" class="btn btn-success btn-sm">+</a>
                             <a href="{{ path('app_cart_remove', {'id': item.id}) }}" class="btn btn-danger btn-sm">Retirer</a>
-                        </td>
+                        </div>
+                    </td>
+
                     </tr>
                 {% endfor %}
             </tbody>
@@ -40,6 +46,10 @@
                 </tr>
             </tfoot>
         </table>
+
+        <div class="text-end mt-4">
+            <a href="{{ path('app_cart_checkout') }}" class="btn btn-primary btn-lg">Confirmer la commande</a>
+        </div>
     {% else %}
         <p>Votre panier est vide.</p>
     {% endif %}
