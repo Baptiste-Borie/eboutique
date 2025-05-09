@@ -1,13 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Film{% endblock %}
+{% block title %}Modifier un film{% endblock %}
 
 {% block body %}
-    <h1>Edit Film</h1>
+<div class="container py-5">
+    <h1 class="h3 text-primary mb-4">✏️ Modifier un film</h1>
 
-    {{ include('film/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('film/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_film_index') }}">back to list</a>
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <a href="{{ path('app_film_index') }}" class="btn btn-outline-secondary">
+            ← Retour à la liste
+        </a>
 
-    {{ include('film/_delete_form.html.twig') }}
+        {{ include('film/_delete_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}

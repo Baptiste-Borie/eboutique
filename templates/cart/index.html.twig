@@ -3,55 +3,61 @@
 {% block title %}Mon panier{% endblock %}
 
 {% block body %}
-<div class="container my-5">
-    <h2 class="mb-4">Votre panier</h2>
+<div class="container py-5">
+    <h2 class="mb-4 text-primary">🛒 Votre panier</h2>
 
     {% if cartItems is not empty %}
-        <table class="table table-striped">
-            <thead>
-        <tr>
-            <th>Film</th>
-            <th>Prix</th>
-            <th>Quantité</th>
-            <th>Total</th>
-            <th>Action</th>
-        </tr>
-            </thead>
-            <tbody>
-                {% set total = 0 %}
-                {% for item in cartItems %}
-                    {% set totalItem = item.film.prix * item.quantity %}
-                    {% set total = total + totalItem %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-primary">
                     <tr>
-                        <td>{{ item.film.titre }}</td>
-                        <td>{{ item.film.prix }} €</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ totalItem }} €</td>
-                     <td>
-                        <div class="btn-group" role="group">
-                            <a href="{{ path('app_cart_decrease', {'id': item.id}) }}" class="btn btn-warning btn-sm">-</a>
-                            <span class="btn btn-light btn-sm">{{ item.quantity }}</span>
-                            <a href="{{ path('app_cart_increase', {'id': item.id}) }}" class="btn btn-success btn-sm">+</a>
-                            <a href="{{ path('app_cart_remove', {'id': item.id}) }}" class="btn btn-danger btn-sm">Retirer</a>
-                        </div>
-                    </td>
-
+                        <th>🎬 Film</th>
+                        <th>💰 Prix unitaire</th>
+                        <th class="text-center">🔢 Quantité</th>
+                        <th>💵 Total</th>
+                        <th class="text-center">🛠️ Actions</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th colspan="3" class="text-end">Total :</th>
-                    <th>{{ total }} €</th>
-                </tr>
-            </tfoot>
-        </table>
+                </thead>
+                <tbody>
+                    {% set total = 0 %}
+                    {% for item in cartItems %}
+                        {% set totalItem = item.film.prix * item.quantity %}
+                        {% set total = total + totalItem %}
+                        <tr>
+                            <td>{{ item.film.titre }}</td>
+                            <td>{{ item.film.prix }} €</td>
+                            <td class="text-center">{{ item.quantity }}</td>
+                            <td>{{ totalItem }} €</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ path('app_cart_decrease', {'id': item.id}) }}" class="btn btn-sm btn-outline-warning">-</a>
+                                    <span class="btn btn-sm btn-light disabled">{{ item.quantity }}</span>
+                                    <a href="{{ path('app_cart_increase', {'id': item.id}) }}" class="btn btn-sm btn-outline-success">+</a>
+                                    <a href="{{ path('app_cart_remove', {'id': item.id}) }}" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr class="table-light">
+                        <th colspan="3" class="text-end">💳 Total général :</th>
+                        <th>{{ total }} €</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
 
         <div class="text-end mt-4">
-            <a href="{{ path('app_cart_checkout') }}" class="btn btn-primary btn-lg">Confirmer la commande</a>
+            <a href="{{ path('app_cart_checkout') }}" class="btn btn-primary btn-lg">
+                ✅ Confirmer la commande
+            </a>
         </div>
     {% else %}
-        <p>Votre panier est vide.</p>
+        <div class="alert alert-info text-center mt-5" role="alert">
+            Votre panier est vide. 🛍️
+        </div>
     {% endif %}
 </div>
 {% endblock %}
