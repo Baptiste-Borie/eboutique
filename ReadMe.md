@@ -55,6 +55,7 @@ cd eboutique
 
 ## 👤 Comptes de test
 
-Email Mot de passe Rôle
-admin@boutique.fr root123 ROLE_ADMIN
-LaBete@gmail.fr azerty ROLE_USER
+| Email                                         | Mot de passe | Rôle       |
+| --------------------------------------------- | ------------ | ---------- |
+| [LaBete@gmail.fr](mailto:LaBete@gmail.fr)     | azerty       | ROLE_USER  |
+| [admin@boutique.fr](mailto:admin@boutique.fr) | root123      | ROLE_ADMIN |
