@@ -1,9 +1,8 @@
 # 🎬 Swatch Series – Boutique de Films (Symfony)
 
-Bienvenue sur **Swatch Series**, une application Symfony 6 permettant d’explorer, gérer et commander des films au format physique.  
-Elle propose une gestion avancée des utilisateurs, des rôles et un panier complet avec confirmation de commande.
+Bienvenue sur **Swatch Series**, une application Symfony 6 permettant d’explorer, gérer et commander des films au format physique.
 
-Le site est accessible sur le site : https://borie.alwaysdata.net/
+🔗 Le site est en ligne ici : [https://borie.alwaysdata.net/](https://borie.alwaysdata.net/)
 
 ---
 
@@ -11,35 +10,41 @@ Le site est accessible sur le site : https://borie.alwaysdata.net/
 
 ### 🎥 Côté utilisateur
 
-- 🔍 Parcourir les films par catégorie
-- 🛒 Ajouter des films au panier avec gestion des quantités
-- ✅ Confirmation de commande avec formulaire d'adresse
-- 💾 Possibilité d’enregistrer une adresse dans son profil
+| Fonctionnalité                                            | État  |
+| --------------------------------------------------------- | ----- |
+| 🔍 Parcourir les films par catégorie                      | ✅ OK |
+| 🛒 Ajouter des films au panier avec gestion des quantités | ✅ OK |
+| ✅ Confirmation de commande avec formulaire d'adresse     | ✅ OK |
+| 💾 Adresse enregistrée dans le profil utilisateur         | ✅ OK |
+| 👤 Page "Mon compte" modifiable                           | ✅ OK |
+| 🛑 Gestion des erreurs utilisateur (ex: panier vide)      | ✅ OK |
 
 ### 🛠️ Côté administrateur
 
-- 📁 CRUD des films et des catégories
-- 👥 Gestion des utilisateurs :
-  - Affichage des rôles
-  - Promotion / rétrogradation `ROLE_ADMIN`
-  - Suppression d’un utilisateur
-- 🔐 Sécurité :
-  - Accès restreint à certaines routes selon les rôles
-  - Protection CSRF sur les actions sensibles
+| Fonctionnalité                            | État  |
+| ----------------------------------------- | ----- |
+| 📁 CRUD des films                         | ✅ OK |
+| 📂 CRUD des catégories                    | ✅ OK |
+| 👥 Affichage des utilisateurs et rôles    | ✅ OK |
+| 🔁 Promotion/rétrogradation des rôles     | ✅ OK |
+| 🗑️ Suppression sécurisée d’un utilisateur | ✅ OK |
+| 🔐 Sécurité des routes (ROLE_ADMIN)       | ✅ OK |
+| 🧪 CSRF sur actions sensibles             | ✅ OK |
 
 ---
 
-## 🧱 Technologies
+## 🧱 Technologies utilisées
 
 - **Symfony 6**
 - **Doctrine ORM**
 - **Twig**
 - **Bootstrap 5.3**
 - **MySQL**
+- **ImportMap / Webpack Encore**
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Installation en local
 
 1. Clone du projet :
 
@@ -47,3 +52,9 @@ Le site est accessible sur le site : https://borie.alwaysdata.net/
 git clone https://github.com/Baptiste-Borie/eboutique.git
 cd eboutique
 ```
+
+## 👤 Comptes de test
+
+Email Mot de passe Rôle
+admin@boutique.fr root123 ROLE_ADMIN
+LaBete@gmail.fr azerty ROLE_USER
