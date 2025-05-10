@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les utilisateurs{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4 text-primary">👥 Gestion des utilisateurs</h1>
+
+    <table class="table table-hover table-bordered align-middle">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Rôles</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% for role in user.roles %}
+                            <span class="badge bg-secondary">{{ role }}</span>
+                        {% endfor %}
+                    </td>
+                    <td class="text-center">
+                        {% if app.user.id != user.id %}
+                            <div class="d-flex justify-content-center gap-2">
+                                <form method="post" action="{{ path('app_user_toggle_admin', {'id': user.id}) }}">
+                                    <button type="submit" class="btn btn-sm btn-warning">
+                                        {% if 'ROLE_ADMIN' in user.roles %}
+                                            🔽 Rétrograder
+                                        {% else %}
+                                            🔼 Promouvoir admin
+                                        {% endif %}
+                                    </button>
+                                </form>
+
+                                <form method="post" action="{{ path('app_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-danger">🗑️ Supprimer</button>
+                                </form>
+                            </div>
+                        {% else %}
+                            <span class="text-muted">Vous-même</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">Aucun utilisateur trouvé.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

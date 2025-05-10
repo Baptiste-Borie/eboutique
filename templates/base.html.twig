@@ -1,84 +1,119 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
 
-        {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}{% endblock %}
+</head>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
+<body>
+    {# ----------- HEADER GLOBAL ----------- #}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ path('app_home') }}">
+                    Swatch series
+                </a>
 
-    <body>
-        {# ----------- HEADER GLOBAL ----------- #}
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="{{ path('app_home') }}">Swatch series 
-                    </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+                        </li>
+
+                        {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+                                <a class="nav-link" href="{{ path('app_film_index') }}">Liste des films</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_categorie_index') }}">Gérer les catégories</a>
+                            </li>
+                        {% endif %}
+                    </ul>
 
-                            {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('app_film_index') }}">Liste des films</a>
-                                </li>
-
-                                {% if is_granted('ROLE_ADMIN') %}
-                                <li class="nav-item"> 
-                                    <a href="{{ path('app_categorie_index') }}" class="nav-link" >Gérer les catégories</a>
-                                </li>
-                                {% endif %}
-
+                    {# -------- DROITE NAVBAR -------- #}
+                    <div class="d-flex">
+                        {% if app.user %}
+                            {% set cartCount = 0 %}
+                            {% if app.user and app.user.cart %}
+                                {% for item in app.user.cart.cartItems %}
+                                    {% set cartCount = cartCount + item.quantity %}
+                                {% endfor %}
                             {% endif %}
 
+                            <div class="dropdown">
+                                <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% if cartCount > 0 %}
+                                        <span id="cart-badge-icon" class="badge bg-danger rounded-pill m-1">{{ cartCount }}</span>
+                                    {% endif %}
+                                    {{ app.user.email }}
+                                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                                        👑
+                                    {% endif %}
+                                </a>
 
-                            {# Si l'utilisateur est connecté, afficher Déconnexion #}
-                            {% if app.user %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('app_cart') }}">Panier</a>
-                                </li>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center" href="{{ path('app_cart') }}">
+                                            <span>🛒 Mon panier</span>
+                                            {% if cartCount > 0 %}
+                                                <span class="badge bg-danger rounded-pill m-1">{{ cartCount }}</span>
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('app_user_index') }}">
+                                                👥 Gérer les utilisateurs
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                    {% endif %}
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
-                                </li>
-
-                            {% endif %}
-                        </ul>
-
-                        {# À droite de la navbar #}
-                        <div class="d-flex">
-                            {% if app.user %}
-                                <span class="text-light">
-                                    Connecté en tant que {{ app.user.email }}
-                                        {% if 'ROLE_ADMIN' in app.user.roles %}
-                                             👑
-                                        {% endif %}
-                                </span>
-                            {% else %}
-                                <a class="btn btn-outline-light" href="{{ path('app_login') }}">Se connecter</a>
-                            {% endif %}
-                        </div>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="{{ path('app_logout') }}">🚪 Déconnexion</a></li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <a class="btn btn-outline-light" href="{{ path('app_login') }}">Se connecter</a>
+                        {% endif %}
                     </div>
                 </div>
-            </nav>
+            </div>
+        </nav>
+    </header>
 
+    {# ----------- CONTENU DE LA PAGE ----------- #}
+    {% block body %}{% endblock %}
 
-        </header>
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const dropdown = document.querySelector('.dropdown');
+                const badge = document.getElementById('cart-badge-icon');
 
-        {# ----------- CONTENU DE LA PAGE ----------- #}
+                if (dropdown && badge) {
+                    dropdown.addEventListener('show.bs.dropdown', () => {
+                        badge.style.display = 'none';
+                    });
 
-        {% block body %}{% endblock %}
-    </body>
+                    dropdown.addEventListener('hide.bs.dropdown', () => {
+                        badge.style.display = 'inline-block';
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
+</body>
 </html>

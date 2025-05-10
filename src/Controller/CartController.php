@@ -180,9 +180,22 @@ final class CartController extends AbstractController
         $city = $request->request->get('city');
         $postal = $request->request->get('postal');
 
-        // Ici tu pourrais créer une entité Order, l’enregistrer, etc.
-        // Pour l'instant on peut juste vider le panier.
+        // 🆕 Enregistrement des données dans le profil utilisateur
+        $user->setAdresse($address);
+        $user->setVille($city);
+        $user->setCodePostal($postal);
+        $em->persist($user);
 
+        $saveAddress = $request->request->get('saveAddress'); // sera '1' si cochée
+
+        if ($saveAddress) {
+            $user->setAdresse($address);
+            $user->setVille($city);
+            $user->setCodePostal($postal);
+            $em->persist($user);
+        }
+
+        // Suppression des items du panier
         foreach ($cart->getCartItems() as $item) {
             $em->remove($item);
         }
@@ -191,6 +204,7 @@ final class CartController extends AbstractController
 
         return $this->redirectToRoute('app_cart_success');
     }
+
 
     #[Route('/cart/success', name: 'app_cart_success')]
     public function success(): Response

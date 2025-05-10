@@ -1,4 +1,21 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+<div class="card shadow-sm rounded-4 p-4">
+    <h2 class="mb-4 text-primary">{{ button_label|default('Enregistrer la catégorie') }}</h2>
+
+    {% for field in form %}
+        {% if field.vars.name != '_token' %}
+            <div class="mb-3">
+                {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(field) }}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <div class="text-end mt-4">
+        <button class="btn btn-success px-4" type="submit">
+            ✅ {{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
+</div>
 {{ form_end(form) }}

@@ -36,6 +36,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Cart $cart = null;
 
+
+    #[ORM\Column(nullable: true)]
+    private ?string $adresse = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $ville = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $codePostal = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +135,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         $this->cart = $cart;
 
+        return $this;
+    }
+
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): static
+    {
+        $this->adresse = $adresse;
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?string $codePostal): static
+    {
+        $this->codePostal = $codePostal;
         return $this;
     }
 }
