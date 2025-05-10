@@ -3,6 +3,8 @@
 Bienvenue sur **Swatch Series**, une application Symfony 6 permettant d’explorer, gérer et commander des films au format physique.  
 Elle propose une gestion avancée des utilisateurs, des rôles et un panier complet avec confirmation de commande.
 
+Le site est accessible sur le site : https://borie.alwaysdata.net/
+
 ---
 
 ## 🚀 Fonctionnalités

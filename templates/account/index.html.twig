@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4 text-primary">👤 Mon compte</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body">
+            {{ form_start(form) }}
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    {{ form_row(form.email, {
+                        label: 'Adresse email',
+                        attr: { class: 'form-control' }
+                    }) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.adresse, {
+                        label: 'Adresse postale',
+                        attr: { class: 'form-control' }
+                    }) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.ville, {
+                        label: 'Ville',
+                        attr: { class: 'form-control' }
+                    }) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.codePostal, {
+                        label: 'Code postal',
+                        attr: { class: 'form-control' }
+                    }) }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form_row(form.plainPassword.first, {
+                        label: 'Nouveau mot de passe',
+                        attr: { class: 'form-control' }
+                    }) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.plainPassword.second, {
+                        label: 'Confirmation du mot de passe',
+                        attr: { class: 'form-control' }
+                    }) }}
+                </div>
+            </div>
+
+            <div class="text-end mt-4">
+                <button class="btn btn-primary">
+                    💾 Enregistrer les modifications
+                </button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

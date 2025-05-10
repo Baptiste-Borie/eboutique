@@ -71,6 +71,11 @@
                                             {% endif %}
                                         </a>
                                     </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ path('app_account') }}">👤 Mon compte</a>
+                                    </li>
+
                                     {% if 'ROLE_ADMIN' in app.user.roles %}
                                         <li>
                                             <a class="dropdown-item" href="{{ path('app_user_index') }}">
