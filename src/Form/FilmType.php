@@ -8,9 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use App\Entity\Categorie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 
 
@@ -28,7 +28,15 @@ class FilmType extends AbstractType
                 'required' => false,
             ])
             ->add('prix')
-            ->add('format')
+            ->add('format', ChoiceType::class, [
+                'choices' => [
+                    'DVD' => 'DVD',
+                    'Blu-ray' => 'Blu-ray',
+                ],
+                'placeholder' => 'Choisissez un format',
+                'label' => 'Format',
+                'required' => true,
+            ])
             ->add('imageFile', FileType::class, [
                 'label' => 'Image du film (JPG, PNG, WebP)',
                 'mapped' => false,
